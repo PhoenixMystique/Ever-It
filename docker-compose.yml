@@ -1,16 +1,8 @@
 version: "2"
 services:
-  frontend:
-    env_file: "./Front-end/.env"
-    build: ./Front-end
-    stdin_open: true
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
   backend:
     env_file: "./Backend/.env"
-    build: ./Backend
+    image: devwithadii/everit:1.0.0
     ports:
       - "8080:8080"
     depends_on:
@@ -19,3 +11,13 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+volumes:
+  mongo-data:
+    driver: local
